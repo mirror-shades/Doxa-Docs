@@ -1,4 +1,4 @@
-name: Doxa Docs
+site_name: Doxa Docs
 on:
   push:
     branches:
