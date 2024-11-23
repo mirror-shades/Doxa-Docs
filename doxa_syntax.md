@@ -145,17 +145,22 @@ constants cannot be declared without a value
 const x;                  //error, needs a value
 ```
 
-all variables are auto by default
+all variables are dynamic by default
 
 ```
-var x = 1;                //auto
-var x = "two";            //auto
-var x = 3.14;             //auto
-var x = true;             //auto
-var x = [1, 2, 3];        //auto
+var x = 1;                //int
+var x = "two";            //string
+var x = 3.14;             //float
+var x = true;             //bool
+var x = [1, 2, 3];        //array
 ```
 
-type declarations are allowed
+auto can be declared exlpicitly
+```
+var x: auto = 1;          //int
+```
+
+static type declarations are allowed as well
 
 ```
 var x: int = 1;           //int
