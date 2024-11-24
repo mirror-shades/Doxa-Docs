@@ -1,22 +1,53 @@
 site_name: Doxa Docs
+site_url: https://yourusername.github.io/your-repo-name/
+
+nav:
+  - Home: index.md
+  # Add more navigation items as needed.
+
+theme:
+  name: material
+
+# Other MkDocs settings as needed.
+
+.github/workflows/deploy.yml
+
+This is a GitHub Actions workflow file that will automate the process of building and deploying your MkDocs site whenever you push to the specified branches:
+
+name: Deploy MkDocs
+
 on:
   push:
     branches:
       - main
       - master
+
 permissions:
   contents: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: 3.x
-      - uses: actions/cache@v4
-        with:
-          key: ${{ github.ref }}
-          path: .cache
-      - run: pip install mkdocs-material
-      - run: mkdocs gh-deploy --force
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'  # Specify a specific version if required
+
+    - name: Cache MkDocs dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Install MkDocs Material
+      run: pip install mkdocs-material
+
+    - name: Deploy to GitHub Pages
+      run: mkdocs gh-deploy --force
